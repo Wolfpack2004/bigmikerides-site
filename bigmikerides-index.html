@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Mike Rides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0D0D0D;
+    --navy-deep:#000000;
+    --cream:#F5F1EC;
+    --amber:#E63946;
+    --amber-deep:#B5222E;
+    --brake:#D62839;
+    --ink:#141414;
+    --ink-soft:#4A4A4A;
+    --line:rgba(245,241,236,0.16);
+    --line-dark:rgba(20,20,20,0.14);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Karla', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.12;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* Skip link for accessibility */
+  .skip-link{
+    position:absolute; left:-999px; top:0;
+    background:var(--amber); color:var(--navy-deep);
+    padding:12px 20px; z-index:100; font-weight:700;
+  }
+  .skip-link:focus{left:12px; top:12px;}
+
+  :focus-visible{
+    outline:3px solid var(--amber);
+    outline-offset:3px;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--navy);
+    color:var(--cream);
+    position:sticky; top:0; z-index:20;
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    max-width:1120px; margin:0 auto;
+  }
+  .logo{
+    display:flex; align-items:baseline; gap:10px;
+  }
+  .logo-mark{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.4rem;
+    color:var(--amber);
+  }
+  .logo-word{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.4rem;
+  }
+  nav{display:flex; gap:28px; align-items:center;}
+  nav a{
+    text-decoration:none;
+    font-size:0.98rem;
+    color:var(--cream);
+    opacity:0.85;
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+    transition:opacity 0.15s ease, border-color 0.15s ease;
+  }
+  nav a:hover{opacity:1; border-color:var(--amber);}
+  .nav-call{
+    background:var(--brake);
+    color:var(--cream) !important;
+    padding:9px 18px;
+    border-radius:3px;
+    font-weight:700;
+    opacity:1 !important;
+    border-bottom:none !important;
+  }
+  .nav-call:hover{background:#a8382f;}
+  .menu-toggle{
+    display:none;
+    background:none; border:none; color:var(--cream);
+    font-size:1.6rem; cursor:pointer;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--navy);
+    color:var(--cream);
+    padding:88px 0 96px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-backdrop{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center bottom;
+    z-index:0;
+  }
+  .hero-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(100deg, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.4) 75%, rgba(0,0,0,0.15) 100%);
+    z-index:1;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-120px; top:-60px;
+    width:420px; height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(230,57,70,0.3) 0%, rgba(230,57,70,0) 68%);
+    pointer-events:none;
+    z-index:1;
+  }
+  .hero-inner{
+    max-width:1120px; margin:0 auto; padding:0 32px;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:56px;
+    align-items:end;
+    position:relative;
+    z-index:2;
+  }
+  .hero-eyebrow{
+    font-size:0.95rem;
+    color:var(--amber);
+    font-weight:700;
+    margin-bottom:18px;
+    opacity:0;
+    animation:riseIn 0.7s ease forwards;
+  }
+  h1.hero-headline{
+    font-size:clamp(2.6rem, 5.4vw, 4.1rem);
+    max-width:11ch;
+    opacity:0;
+    animation:riseIn 0.7s ease 0.12s forwards;
+  }
+  .hero-sub{
+    margin-top:22px;
+    font-size:1.15rem;
+    max-width:44ch;
+    color:rgba(250,246,239,0.86);
+    opacity:0;
+    animation:riseIn 0.7s ease 0.24s forwards;
+  }
+  .hero-actions{
+    margin-top:34px;
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    opacity:0;
+    animation:riseIn 0.7s ease 0.36s forwards;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 26px;
+    border-radius:3px;
+    font-weight:700;
+    font-size:1rem;
+    text-decoration:none;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform 0.12s ease, background 0.15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{
+    background:var(--brake);
+    color:var(--cream);
+  }
+  .btn-primary:hover{background:#a8382f;}
+  .btn-ghost{
+    background:transparent;
+    color:var(--cream);
+    border-color:var(--line);
+  }
+  .btn-ghost:hover{border-color:var(--amber); color:var(--amber);}
+
+  @keyframes riseIn{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-eyebrow, h1.hero-headline, .hero-sub, .hero-actions{
+      animation:none; opacity:1;
+    }
+  }
+
+  .hero-photo{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .hero-photo img{
+    width:76px;
+    height:76px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid var(--amber);
+  }
+  .hero-photo-name{
+    font-family:'Fraunces', serif;
+    font-size:1.15rem;
+    color:var(--cream);
+  }
+  .hero-photo-role{
+    font-size:0.9rem;
+    color:rgba(255,249,241,0.72);
+    margin-top:2px;
+  }
+
+  .hero-plate{
+    background:var(--cream);
+    color:var(--ink);
+    border-radius:4px;
+    padding:26px 24px;
+    align-self:end;
+    box-shadow:0 18px 40px rgba(0,0,0,0.28);
+  }
+  .hero-plate-label{
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .hero-plate-value{
+    font-family:'Fraunces', serif;
+    font-size:1.7rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+  }
+  .hero-plate-divider{
+    height:1px;
+    background:var(--line-dark);
+    margin:16px 0;
+  }
+  .hero-plate-row{
+    display:flex; justify-content:space-between;
+    font-size:0.92rem; margin-bottom:8px;
+  }
+  .hero-plate-row span:last-child{font-weight:700;}
+
+  /* ---------- Meet the driver ---------- */
+  .meet{
+    padding:96px 0;
+    background:var(--cream);
+    border-bottom:1px solid var(--line-dark);
+  }
+  .meet-grid{
+    display:grid;
+    grid-template-columns:0.8fr 1.2fr;
+    gap:56px;
+    align-items:center;
+  }
+  .meet-photo-wrap{
+    border-radius:6px;
+    overflow:hidden;
+    border:1px solid var(--line-dark);
+  }
+  .meet-photo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    aspect-ratio:4/5;
+  }
+  .meet-copy-solo{
+    max-width:640px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .meet-copy-solo h2{
+    max-width:none;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .meet-copy-solo p{
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .meet-copy h2{
+    font-size:clamp(1.9rem, 3.2vw, 2.4rem);
+    max-width:16ch;
+    margin-bottom:20px;
+  }
+  .meet-copy p{
+    color:var(--ink-soft);
+    font-size:1.05rem;
+    max-width:52ch;
+  }
+  @media (max-width: 880px){
+    .meet-grid{grid-template-columns:1fr;}
+    .meet-photo{aspect-ratio:16/10;}
+  }
+
+  /* ---------- Services (route strip) ---------- */
+  .services{
+    padding:96px 0;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .section-head{
+    max-width:52ch;
+    margin-bottom:52px;
+  }
+  .section-head h2{
+    font-size:clamp(1.9rem, 3.2vw, 2.5rem);
+  }
+  .section-head p{
+    margin-top:14px;
+    color:var(--ink-soft);
+    font-size:1.05rem;
+  }
+  .route-strip{
+    display:flex;
+    flex-direction:column;
+  }
+  .route-item{
+    display:grid;
+    grid-template-columns:64px 1fr 1.2fr;
+    gap:28px;
+    align-items:start;
+    padding:28px 0;
+    border-top:1px solid var(--line-dark);
+  }
+  .route-strip .route-item:last-child{
+    border-bottom:1px solid var(--line-dark);
+  }
+  .route-icon{
+    width:44px; height:44px;
+    border-radius:50%;
+    background:var(--navy);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--amber);
+    flex-shrink:0;
+  }
+  .route-icon svg{width:22px; height:22px;}
+  .route-item h3{
+    font-size:1.25rem;
+    padding-top:4px;
+  }
+  .route-item p{
+    color:var(--ink-soft);
+    font-size:0.98rem;
+    padding-top:4px;
+  }
+
+  /* ---------- Why section ---------- */
+  .why{
+    background:var(--navy);
+    color:var(--cream);
+    padding:96px 0;
+  }
+  .why .section-head p{color:rgba(250,246,239,0.78);}
+  .why-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:36px;
+  }
+  .why-card{
+    padding:0;
+  }
+  .why-number{
+    font-family:'Fraunces', serif;
+    font-size:1.1rem;
+    color:var(--amber);
+    margin-bottom:14px;
+  }
+  .why-card h3{
+    font-size:1.2rem;
+    margin-bottom:10px;
+  }
+  .why-card p{
+    color:rgba(250,246,239,0.75);
+    font-size:0.97rem;
+  }
+
+  /* ---------- How it works ---------- */
+  .how{
+    padding:96px 0;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .how-steps{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0;
+    counter-reset:step;
+  }
+  .how-step{
+    position:relative;
+    padding:0 28px 0 0;
+  }
+  .how-step:not(:first-child){
+    border-left:1px solid var(--line-dark);
+    padding-left:28px;
+  }
+  .how-step-num{
+    font-family:'Fraunces', serif;
+    font-size:2.6rem;
+    color:var(--amber-deep);
+    line-height:1;
+    margin-bottom:18px;
+  }
+  .how-step h3{
+    font-size:1.15rem;
+    margin-bottom:10px;
+  }
+  .how-step p{
+    color:var(--ink-soft);
+    font-size:0.97rem;
+  }
+
+  /* ---------- Testimonial ---------- */
+  .quote-block{
+    padding:88px 0;
+    background:var(--cream);
+  }
+  .quote-inner{
+    max-width:700px;
+  }
+  blockquote{
+    font-family:'Fraunces', serif;
+    font-size:clamp(1.5rem, 2.6vw, 1.9rem);
+    font-weight:400;
+    line-height:1.4;
+    color:var(--ink);
+  }
+  .quote-attr{
+    margin-top:20px;
+    font-size:0.95rem;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- Contact / CTA ---------- */
+  .contact{
+    background:var(--navy-deep);
+    color:var(--cream);
+    padding:88px 0;
+  }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:56px;
+    align-items:center;
+  }
+  .contact h2{
+    font-size:clamp(1.9rem, 3.2vw, 2.4rem);
+    max-width:14ch;
+  }
+  .contact p{
+    margin-top:16px;
+    color:rgba(250,246,239,0.78);
+    max-width:42ch;
+  }
+  .contact-actions{
+    margin-top:28px;
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .contact-plate{
+    background:var(--cream);
+    color:var(--ink);
+    border-radius:4px;
+    padding:32px;
+  }
+  .contact-row{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-top:1px solid var(--line-dark);
+    font-size:0.98rem;
+  }
+  .contact-row:first-child{border-top:none;}
+  .contact-row span:first-child{color:var(--ink-soft);}
+  .contact-row span:last-child{font-weight:700; text-align:right;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--navy-deep);
+    color:rgba(250,246,239,0.6);
+    padding:28px 0;
+    border-top:1px solid var(--line);
+    font-size:0.88rem;
+  }
+  .footer-inner{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 880px){
+    .hero-inner{grid-template-columns:1fr; align-items:start;}
+    .hero-plate{margin-top:12px;}
+    .why-grid{grid-template-columns:1fr; gap:32px;}
+    .how-steps{grid-template-columns:1fr; gap:36px;}
+    .how-step:not(:first-child){border-left:none; padding-left:0; border-top:1px solid var(--line-dark); padding-top:32px;}
+    .contact-grid{grid-template-columns:1fr;}
+    .route-item{grid-template-columns:48px 1fr; }
+    .route-item p{grid-column:2 / 3;}
+  }
+  @media (max-width: 680px){
+    nav{
+      position:fixed; top:64px; left:0; right:0;
+      background:var(--navy);
+      flex-direction:column;
+      align-items:flex-start;
+      padding:20px 32px 28px;
+      display:none;
+      border-bottom:1px solid var(--line);
+    }
+    nav.open{display:flex;}
+    .menu-toggle{display:block;}
+    .header-inner{padding:16px 20px;}
+    .wrap, .hero-inner{padding-left:20px; padding-right:20px;}
+  }
+  /* ---------- Scroll reveal ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+  }
+
+  /* ---------- Enhanced hover effects ---------- */
+  .route-item{
+    transition:transform 0.25s ease, background 0.25s ease;
+    border-radius:6px;
+  }
+  .route-item:hover{
+    transform:translateX(6px);
+    background:rgba(230,57,70,0.04);
+  }
+  .route-icon{
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .route-item:hover .route-icon{
+    transform:scale(1.1) rotate(-4deg);
+    box-shadow:0 0 0 6px rgba(230,57,70,0.14);
+  }
+  .why-card{
+    transition:transform 0.25s ease;
+  }
+  .why-card:hover{
+    transform:translateY(-6px);
+  }
+  .why-card:hover .why-number{
+    color:var(--amber);
+  }
+  .btn{
+    position:relative;
+  }
+  .btn-primary:hover{
+    box-shadow:0 8px 28px rgba(214,40,57,0.35);
+  }
+  .how-step{
+    transition:transform 0.25s ease;
+  }
+  .how-step:hover{
+    transform:translateY(-4px);
+  }
+  .how-step-num{
+    transition:transform 0.25s ease, color 0.25s ease;
+  }
+  .how-step:hover .how-step-num{
+    transform:scale(1.12);
+  }
+
+  /* ---------- Floating call button ---------- */
+  .float-call{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:var(--brake);
+    color:var(--cream);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4), 0 0 0 0 rgba(214,40,57,0.5);
+    z-index:50;
+    text-decoration:none;
+    animation:pulseGlow 2.4s ease-in-out infinite;
+  }
+  .float-call svg{width:26px; height:26px;}
+  .float-call:hover{animation-play-state:paused; box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+  @keyframes pulseGlow{
+    0%,100%{box-shadow:0 10px 30px rgba(0,0,0,0.4), 0 0 0 0 rgba(214,40,57,0.45);}
+    50%{box-shadow:0 10px 30px rgba(0,0,0,0.4), 0 0 0 12px rgba(214,40,57,0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .float-call{animation:none;}
+  }
+  @media (max-width: 680px){
+    .float-call{width:54px; height:54px; bottom:16px; right:16px;}
+  }
+
+  /* ---------- Illustrated service cards ---------- */
+  .service-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:28px;
+  }
+  .service-card{
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--cream);
+    border:1px solid var(--line-dark);
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .service-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 16px 40px rgba(0,0,0,0.35);
+  }
+  .service-art{
+    height:170px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .service-illustration{
+    width:70%;
+    height:70%;
+  }
+  .service-body{
+    padding:24px 26px 28px;
+  }
+  .service-body h3{
+    font-size:1.2rem;
+    margin-bottom:10px;
+  }
+  .service-body p{
+    color:var(--ink-soft);
+    font-size:0.96rem;
+  }
+  @media (max-width: 700px){
+    .service-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Road banner ---------- */
+  .road-banner{
+    position:relative;
+    height:220px;
+    overflow:hidden;
+  }
+  .road-banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    display:block;
+  }
+
+  /* ---------- Section accent underline ---------- */
+  .section-head h2::after{
+    content:"";
+    display:block;
+    width:56px;
+    height:4px;
+    background:var(--amber);
+    border-radius:2px;
+    margin-top:18px;
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-mark">BM</span>
+      <span class="logo-word">Big Mike Rides</span>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle menu">&#9776;</button>
+    <nav id="siteNav">
+      <a href="#meet">Meet Mike</a>
+      <a href="#services">Services</a>
+      <a href="#how">How it works</a>
+      <a href="#contact">Contact</a>
+      <a href="tel:+12147850921" class="nav-call">Call to book</a>
+      <a href="#" id="bookNowLink" class="nav-call" style="background:var(--amber-deep);" target="_blank" rel="noopener">Book a ride</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAwIDkwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNYXggc2xpY2UiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJza3kiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzBEMEQwRCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzEzMTQxNyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxQjFDMjAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3ciIGN4PSI4MiUiIGN5PSIxOCUiIHI9IjQyJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNFNjM5NDYiIHN0b3Atb3BhY2l0eT0iMC4yMiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNFNjM5NDYiIHN0b3Atb3BhY2l0eT0iMCIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icm9hZCIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMDUwNTA1Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE2MTYxNiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CgogIDxyZWN0IHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgZmlsbD0idXJsKCNza3kpIi8+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSJ1cmwoI2dsb3cpIi8+CgogIDwhLS0gZmFyIHNreWxpbmUgLS0+CiAgPGcgZmlsbD0iIzFCMUMyMCI+CiAgICA8cmVjdCB4PSI0MCIgeT0iNTYwIiB3aWR0aD0iNzAiIGhlaWdodD0iMjMwIi8+CiAgICA8cmVjdCB4PSIxMzAiIHk9IjUwMCIgd2lkdGg9IjU1IiBoZWlnaHQ9IjI5MCIvPgogICAgPHJlY3QgeD0iMjA1IiB5PSI2MDAiIHdpZHRoPSI5MCIgaGVpZ2h0PSIxOTAiLz4KICAgIDxyZWN0IHg9IjMzMCIgeT0iNDcwIiB3aWR0aD0iNjAiIGhlaWdodD0iMzIwIi8+CiAgICA8cmVjdCB4PSI0MTAiIHk9IjU0MCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjI1MCIvPgogICAgPHJlY3QgeD0iNTIwIiB5PSI2MDAiIHdpZHRoPSI2NSIgaGVpZ2h0PSIxOTAiLz4KICAgIDxyZWN0IHg9IjYxMCIgeT0iNDUwIiB3aWR0aD0iNzAiIGhlaWdodD0iMzQwIi8+CiAgICA8cmVjdCB4PSI3MDAiIHk9IjUyMCIgd2lkdGg9IjkwIiBoZWlnaHQ9IjI3MCIvPgogICAgPHJlY3QgeD0iODIwIiB5PSI1NjAiIHdpZHRoPSI2MCIgaGVpZ2h0PSIyMzAiLz4KICAgIDxyZWN0IHg9IjkwMCIgeT0iNDgwIiB3aWR0aD0iNzUiIGhlaWdodD0iMzEwIi8+CiAgICA8cmVjdCB4PSIxMDAwIiB5PSI2MDAiIHdpZHRoPSI4NSIgaGVpZ2h0PSIxOTAiLz4KICAgIDxyZWN0IHg9IjExMTAiIHk9IjQ0MCIgd2lkdGg9IjY1IiBoZWlnaHQ9IjM1MCIvPgogICAgPHJlY3QgeD0iMTIwMCIgeT0iNTMwIiB3aWR0aD0iOTAiIGhlaWdodD0iMjYwIi8+CiAgICA8cmVjdCB4PSIxMzIwIiB5PSI1ODAiIHdpZHRoPSI2MCIgaGVpZ2h0PSIyMTAiLz4KICAgIDxyZWN0IHg9IjE0MDAiIHk9IjUwMCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjI5MCIvPgogICAgPHJlY3QgeD0iMTUwMCIgeT0iNTYwIiB3aWR0aD0iNzAiIGhlaWdodD0iMjMwIi8+CiAgPC9nPgoKICA8IS0tIG5lYXIgc2t5bGluZSwgZGFya2VyICsgdGFsbGVyIC0tPgogIDxnIGZpbGw9IiMwQTBBMEIiPgogICAgPHJlY3QgeD0iODAiIHk9IjY0MCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxNjAiLz4KICAgIDxyZWN0IHg9IjI2MCIgeT0iNTkwIiB3aWR0aD0iODAiIGhlaWdodD0iMjEwIi8+CiAgICA8cmVjdCB4PSI0NDAiIHk9IjY2MCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxNDAiLz4KICAgIDxyZWN0IHg9IjY1MCIgeT0iNjAwIiB3aWR0aD0iOTAiIGhlaWdodD0iMjAwIi8+CiAgICA8cmVjdCB4PSI4MzAiIHk9IjY1MCIgd2lkdGg9IjExMCIgaGVpZ2h0PSIxNTAiLz4KICAgIDxyZWN0IHg9IjEwMzAiIHk9IjU5MCIgd2lkdGg9Ijg1IiBoZWlnaHQ9IjIxMCIvPgogICAgPHJlY3QgeD0iMTIyMCIgeT0iNjMwIiB3aWR0aD0iMTMwIiBoZWlnaHQ9IjE3MCIvPgogICAgPHJlY3QgeD0iMTQzMCIgeT0iNjAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwMCIvPgogIDwvZz4KCiAgPCEtLSBsaXQgd2luZG93cyAtLT4KICA8ZyBmaWxsPSIjRTYzOTQ2IiBvcGFjaXR5PSIwLjg1Ij4KICAgIDxyZWN0IHg9IjYwIiB5PSI2MDAiIHdpZHRoPSI4IiBoZWlnaHQ9IjEyIi8+CiAgICA8cmVjdCB4PSI2MCIgeT0iNjMwIiB3aWR0aD0iOCIgaGVpZ2h0PSIxMiIvPgogICAgPHJlY3QgeD0iMTUwIiB5PSI1NDAiIHdpZHRoPSI4IiBoZWlnaHQ9IjEyIi8+CiAgICA8cmVjdCB4PSIxNTAiIHk9IjU4MCIgd2lkdGg9IjgiIGhlaWdodD0iMTIiLz4KICAgIDxyZWN0IHg9IjM1MCIgeT0iNTEwIiB3aWR0aD0iOCIgaGVpZ2h0PSIxMiIvPgogICAgPHJlY3QgeD0iMzUwIiB5PSI1NjAiIHdpZHRoPSI4IiBoZWlnaHQ9IjEyIi8+CiAgICA8cmVjdCB4PSI0NzAiIHk9IjcwMCIgd2lkdGg9IjgiIGhlaWdodD0iMTIiLz4KICAgIDxyZWN0IHg9IjY3MCIgeT0iNjQwIiB3aWR0aD0iOCIgaGVpZ2h0PSIxMiIvPgogICAgPHJlY3QgeD0iNjcwIiB5PSI2ODAiIHdpZHRoPSI4IiBoZWlnaHQ9IjEyIi8+CiAgICA8cmVjdCB4PSI4NjAiIHk9IjY5MCIgd2lkdGg9IjgiIGhlaWdodD0iMTIiLz4KICAgIDxyZWN0IHg9IjEwNTAiIHk9IjYzMCIgd2lkdGg9IjgiIGhlaWdodD0iMTIiLz4KICAgIDxyZWN0IHg9IjEwNTAiIHk9IjY3MCIgd2lkdGg9IjgiIGhlaWdodD0iMTIiLz4KICAgIDxyZWN0IHg9IjEyNTAiIHk9IjY3MCIgd2lkdGg9IjgiIGhlaWdodD0iMTIiLz4KICAgIDxyZWN0IHg9IjE0NTAiIHk9IjY0MCIgd2lkdGg9IjgiIGhlaWdodD0iMTIiLz4KICA8L2c+CiAgPGcgZmlsbD0iI0Y1RjFFQyIgb3BhY2l0eT0iMC41Ij4KICAgIDxyZWN0IHg9IjIyMCIgeT0iNjMwIiB3aWR0aD0iNyIgaGVpZ2h0PSIxMCIvPgogICAgPHJlY3QgeD0iNDEwIiB5PSI1ODAiIHdpZHRoPSI3IiBoZWlnaHQ9IjEwIi8+CiAgICA8cmVjdCB4PSI2MjAiIHk9IjQ5MCIgd2lkdGg9IjciIGhlaWdodD0iMTAiLz4KICAgIDxyZWN0IHg9IjkzMCIgeT0iNTIwIiB3aWR0aD0iNyIgaGVpZ2h0PSIxMCIvPgogICAgPHJlY3QgeD0iMTE0MCIgeT0iNDgwIiB3aWR0aD0iNyIgaGVpZ2h0PSIxMCIvPgogICAgPHJlY3QgeD0iMTM0MCIgeT0iNjIwIiB3aWR0aD0iNyIgaGVpZ2h0PSIxMCIvPgogIDwvZz4KCiAgPCEtLSBzdHJlZXQgLS0+CiAgPHJlY3QgeD0iMCIgeT0iODAwIiB3aWR0aD0iMTYwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9InVybCgjcm9hZCkiLz4KICA8ZyBzdHJva2U9IiNGNUYxRUMiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWRhc2hhcnJheT0iNDYgMzQiIG9wYWNpdHk9IjAuMzUiPgogICAgPGxpbmUgeDE9IjAiIHkxPSI4NTAiIHgyPSIxNjAwIiB5Mj0iODUwIi8+CiAgPC9nPgoKICA8IS0tIGNhciBzaWxob3VldHRlIHdpdGggdGFpbC1saWdodHMgLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTE4MCw4MTIpIj4KICAgIDxyZWN0IHg9IjAiIHk9IjgiIHdpZHRoPSIxNTAiIGhlaWdodD0iMjYiIHJ4PSI4IiBmaWxsPSIjMEEwQTBCIi8+CiAgICA8cmVjdCB4PSIyMCIgeT0iLTgiIHdpZHRoPSI5MCIgaGVpZ2h0PSIyNCIgcng9IjgiIGZpbGw9IiMwQTBBMEIiLz4KICAgIDxjaXJjbGUgY3g9IjMwIiBjeT0iMzYiIHI9IjExIiBmaWxsPSIjMDUwNTA1Ii8+CiAgICA8Y2lyY2xlIGN4PSIxMTgiIGN5PSIzNiIgcj0iMTEiIGZpbGw9IiMwNTA1MDUiLz4KICAgIDxyZWN0IHg9IjQiIHk9IjEyIiB3aWR0aD0iOCIgaGVpZ2h0PSIxMCIgcng9IjIiIGZpbGw9IiNFNjM5NDYiLz4KICAgIDxyZWN0IHg9IjQiIHk9IjI0IiB3aWR0aD0iOCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iI0U2Mzk0NiIgb3BhY2l0eT0iMC43Ii8+CiAgPC9nPgo8L3N2Zz4K" alt="" aria-hidden="true" class="hero-backdrop">
+    <div class="hero-overlay"></div>
+    <div class="hero-inner">
+      <div>
+        <p class="hero-eyebrow">Airport runs · everyday rides · everything in between</p>
+        <h1 class="hero-headline">Big Mike will get you there.</h1>
+        <p class="hero-sub">One call books your ride. No app, no surge pricing, no guessing who's showing up — just a driver who knows the way and gets you there on time.</p>
+        <div class="hero-actions">
+          <a href="tel:+12147850921" class="btn btn-primary">Call (214) 785-0921</a>
+          <a href="#" id="bookNowLinkHero" class="btn" style="background:var(--amber-deep); color:var(--cream);" target="_blank" rel="noopener">Book a ride</a>
+          <a href="#services" class="btn btn-ghost">See what we cover</a>
+        </div>
+      </div>
+      <div>
+      <div class="hero-plate">
+        <p class="hero-plate-label">Right now</p>
+        <p class="hero-plate-value">Booking today's rides</p>
+        <div class="hero-plate-divider"></div>
+        <div class="hero-plate-row"><span>Airport pickup</span><span>Flat rate</span></div>
+        <div class="hero-plate-row"><span>Same-day rides</span><span>Usually available</span></div>
+        <div class="hero-plate-row"><span>Service area</span><span>Denton, Collin & DFW</span></div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal meet" id="meet">
+    <div class="wrap">
+      <div class="meet-copy meet-copy-solo">
+        <p class="hero-eyebrow" style="color:var(--amber-deep);">Meet the driver &amp; owner</p>
+        <h2>This is Mike. He's the one who'll pick you up.</h2>
+        <p>Big Mike Rides isn't a call center dispatching strangers — it's Mike, behind the wheel, who started this company because he was tired of waiting on apps that couldn't tell him who was actually coming. He answers his own phone, remembers his regulars, and treats every ride like he's picking up a neighbor. Because he is.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal services" id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Wherever you need to go, Big Mike's headed that way.</h2>
+        <p>Four kinds of rides cover almost everything our regulars call about. If yours isn't listed, call anyway — chances are we can still work it out.</p>
+      </div>
+      <div class="service-grid">
+
+        <div class="service-card">
+          <div class="service-art" style="background:linear-gradient(160deg,#1479A6,#0F5C7D);">
+            <svg viewBox="0 0 200 140" class="service-illustration">
+              <circle cx="100" cy="70" r="60" fill="rgba(255,255,255,0.08)"/>
+              <path d="M40 95 L60 45 L140 45 L160 95 Z" fill="none" stroke="#FFCB3D" stroke-width="3"/>
+              <path d="M20 100 Q100 60 180 100" fill="none" stroke="#FFFBF0" stroke-width="3" opacity="0.7"/>
+              <circle cx="70" cy="105" r="9" fill="#FFFBF0"/>
+              <circle cx="130" cy="105" r="9" fill="#FFFBF0"/>
+              <rect x="55" y="80" width="90" height="26" rx="6" fill="#FFFBF0"/>
+            </svg>
+          </div>
+          <div class="service-body">
+            <h3>Airport transportation</h3>
+            <p>Flat-rate rides to and from DFW and Love Field. Mike tracks your flight, so a delay or an early landing doesn't throw off your pickup.</p>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-art" style="background:linear-gradient(160deg,#F2A900,#E63946);">
+            <svg viewBox="0 0 200 140" class="service-illustration">
+              <circle cx="100" cy="70" r="60" fill="rgba(255,255,255,0.1)"/>
+              <path d="M30 100 Q100 40 170 100" fill="none" stroke="#FFFBF0" stroke-width="4" opacity="0.8"/>
+              <circle cx="100" cy="70" r="30" fill="none" stroke="#FFFBF0" stroke-width="3"/>
+              <path d="M100 52v20l14 14" stroke="#FFFBF0" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="service-body">
+            <h3>Everyday rides</h3>
+            <p>Appointments, errands, a ride to work when your car's in the shop — the kind of trip you'd rather not think twice about.</p>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-art" style="background:linear-gradient(160deg,#D62839,#8f1c28);">
+            <svg viewBox="0 0 200 140" class="service-illustration">
+              <circle cx="100" cy="70" r="60" fill="rgba(255,255,255,0.08)"/>
+              <path d="M100 40 C70 40 55 65 55 85 C55 110 80 120 100 130 C120 120 145 110 145 85 C145 65 130 40 100 40 Z" fill="none" stroke="#FFFBF0" stroke-width="3"/>
+              <circle cx="70" cy="55" r="4" fill="#FFCB3D"/>
+              <circle cx="130" cy="60" r="3" fill="#FFCB3D"/>
+              <circle cx="115" cy="40" r="3" fill="#FFCB3D"/>
+              <circle cx="85" cy="35" r="3" fill="#FFCB3D"/>
+            </svg>
+          </div>
+          <div class="service-body">
+            <h3>Special occasions &amp; events</h3>
+            <p>Weddings, nights out, graduations — book ahead and everyone gets picked up and dropped off together, no one driving.</p>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-art" style="background:linear-gradient(160deg,#0F5C7D,#0D0D0D);">
+            <svg viewBox="0 0 200 140" class="service-illustration">
+              <circle cx="100" cy="70" r="60" fill="rgba(255,255,255,0.08)"/>
+              <rect x="55" y="45" width="90" height="70" rx="8" fill="none" stroke="#FFFBF0" stroke-width="3"/>
+              <line x1="55" y1="65" x2="145" y2="65" stroke="#FFFBF0" stroke-width="3"/>
+              <line x1="75" y1="35" x2="75" y2="55" stroke="#FFFBF0" stroke-width="3" stroke-linecap="round"/>
+              <line x1="125" y1="35" x2="125" y2="55" stroke="#FFFBF0" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="80" cy="85" r="5" fill="#FFCB3D"/>
+              <circle cx="100" cy="85" r="5" fill="#FFCB3D"/>
+              <circle cx="120" cy="85" r="5" fill="#FFCB3D"/>
+            </svg>
+          </div>
+          <div class="service-body">
+            <h3>Scheduled &amp; recurring rides</h3>
+            <p>Same pickup, same time, every week — dialysis, school runs, standing appointments. Set it up once and Mike remembers.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section class="why reveal">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Why people call Big Mike instead of an app.</h2>
+        <p>No dispatch center, no rotating drivers — just a company small enough to know its riders by name.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <p class="why-number">On time</p>
+          <h3>Mike shows up when he says he will</h3>
+          <p>Flight delayed or plans changed? A quick text keeps your pickup accurate — no re-booking through an app.</p>
+        </div>
+        <div class="why-card">
+          <p class="why-number">Upfront</p>
+          <h3>Flat rates, no surge pricing</h3>
+          <p>Airport runs are quoted ahead of time. What you're told on the phone is what you pay at the curb.</p>
+        </div>
+        <div class="why-card">
+          <p class="why-number">Familiar</p>
+          <h3>The same few drivers, every time</h3>
+          <p>Regulars get to know their driver, not a new stranger's car every ride. That's the whole point of calling instead of tapping an app.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="road-banner reveal">
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAwIDMwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgc2xpY2UiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJkdXNrU2t5IiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwRDBEMEQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1NSUiIHN0b3AtY29sb3I9IiMzQTE0MTgiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjQjUyMjJFIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJhc3BoYWx0IiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxQjFDMjAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMEEwQTBCIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPHJhZGlhbEdyYWRpZW50IGlkPSJzdW5HbG93IiBjeD0iNTAlIiBjeT0iNDIlIiByPSIzMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjRjVGMUVDIiBzdG9wLW9wYWNpdHk9IjAuOSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNGNUYxRUMiIHN0b3Atb3BhY2l0eT0iMCIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICA8L2RlZnM+CgogIDxyZWN0IHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNkdXNrU2t5KSIvPgogIDxjaXJjbGUgY3g9IjgwMCIgY3k9IjEyNiIgcj0iOTAiIGZpbGw9InVybCgjc3VuR2xvdykiLz4KICA8Y2lyY2xlIGN4PSI4MDAiIGN5PSIxMjYiIHI9IjM0IiBmaWxsPSIjRjVGMUVDIiBvcGFjaXR5PSIwLjkyIi8+CgogIDwhLS0gaG9yaXpvbiAtLT4KICA8cmVjdCB4PSIwIiB5PSIxNTAiIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjE1MCIgZmlsbD0idXJsKCNhc3BoYWx0KSIvPgogIDxyZWN0IHg9IjAiIHk9IjE0NiIgd2lkdGg9IjE2MDAiIGhlaWdodD0iNiIgZmlsbD0iIzBEMEQwRCIvPgoKICA8IS0tIGNvbnZlcmdpbmcgcm9hZCBlZGdlcyAtLT4KICA8cG9seWdvbiBwb2ludHM9IjgwMCwxNTAgNjQwLDMwMCAwLDMwMCA3MDAsMTUwIiBmaWxsPSIjMTQxNDE2Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSI4MDAsMTUwIDk2MCwzMDAgMTYwMCwzMDAgOTAwLDE1MCIgZmlsbD0iIzE0MTQxNiIvPgoKICA8IS0tIGRhc2hlZCBjZW50cmUgbGluZSwgcGVyc3BlY3RpdmUgLS0+CiAgPGcgZmlsbD0iI0Y1RjFFQyIgb3BhY2l0eT0iMC44NSI+CiAgICA8cG9seWdvbiBwb2ludHM9Ijc5OCwxNTggODAyLDE1OCA4MDYsMTc4IDc5NCwxNzgiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iNzkyLDE5NiA4MDgsMTk2IDgxNiwyMjQgNzg0LDIyNCIvPgogICAgPHBvbHlnb24gcG9pbnRzPSI3ODAsMjQ2IDgyMCwyNDYgODM0LDI4MiA3NjYsMjgyIi8+CiAgPC9nPgoKICA8IS0tIGRpc3RhbnQgdGFpbC1saWdodHMgaGVhZGluZyBhd2F5IC0tPgogIDxjaXJjbGUgY3g9Ijc2MiIgY3k9IjE2NCIgcj0iMyIgZmlsbD0iI0U2Mzk0NiIvPgogIDxjaXJjbGUgY3g9IjgzOCIgY3k9IjE2OCIgcj0iMi40IiBmaWxsPSIjRTYzOTQ2Ii8+Cjwvc3ZnPgo=" alt="" aria-hidden="true">
+  </div>
+
+  <section class="reveal how" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Booking a ride takes three steps.</h2>
+        <p>Call, text, or book online — whichever's easier for you.</p>
+      </div>
+      <div class="how-steps">
+        <div class="how-step">
+          <p class="how-step-num">1</p>
+          <h3>Book your ride</h3>
+          <p>Call, text, or book online with your pickup address, drop-off address, and time. Airport pickups just need your flight number too.</p>
+        </div>
+        <div class="how-step">
+          <p class="how-step-num">2</p>
+          <h3>We confirm it's on the calendar</h3>
+          <p>Your ride goes straight onto Mike's schedule, so nothing gets missed or double-booked.</p>
+        </div>
+        <div class="how-step">
+          <p class="how-step-num">3</p>
+          <h3>Sit back, we've got it</h3>
+          <p>Your driver shows up on time, handles the bags, and gets you where you're going.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-block reveal">
+    <div class="wrap">
+      <div class="quote-inner">
+        <blockquote>Mike picked me up at DFW at 11pm when my flight got delayed twice. Never once wondered if my ride would show.</blockquote>
+        <p class="quote-attr">— A regular rider, Prosper, TX</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal contact" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <h2>Ready when you are.</h2>
+        <p>Call ahead for airport pickups, or reach out same-day for everything else. Mike answers his own phone.</p>
+        <div class="contact-actions">
+          <a href="tel:+12147850921" class="btn btn-primary">Call (214) 785-0921</a>
+          <a href="mailto:mike@bigmikerides.com" class="btn btn-ghost">Email us</a>
+        </div>
+      </div>
+      <div class="contact-plate">
+        <div class="contact-row"><span>Phone</span><span>(214) 785-0921</span></div>
+        <div class="contact-row"><span>Email</span><span>mike@bigmikerides.com</span></div>
+        <div class="contact-row"><span>Service area</span><span>Denton & Collin County, plus all of DFW</span></div>
+        <div class="contact-row"><span>Hours</span><span>Open 24/7</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<a href="tel:+12147850921" class="float-call" aria-label="Call Big Mike Rides now">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+</a>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>&copy; 2026 Big Mike Rides.</span>
+    <span>Licensed & insured local transportation.</span>
+  </div>
+</footer>
+
+<script>
+  // PLACEHOLDER: Once you have your Calendly booking link,
+  // replace the string below with it — this updates both "Book a ride" buttons on the page.
+  const BOOKING_URL = "https://calendly.com/orr200654/30min";
+  document.getElementById('bookNowLink').href = BOOKING_URL;
+  document.getElementById('bookNowLinkHero').href = BOOKING_URL;
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('is-visible'));
+  }
+
+  const menuToggle = document.getElementById('menuToggle');
+  const siteNav = document.getElementById('siteNav');
+  menuToggle.addEventListener('click', () => {
+    const isOpen = siteNav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', isOpen);
+  });
+  siteNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      siteNav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
