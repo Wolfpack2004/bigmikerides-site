@@ -3,9 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Big Mike Rides</title>
+<title>Big Mike Rides | Personal Driver &amp; Car Service in Denton &amp; Collin County, TX</title>
 <meta name="description" content="Big Mike Rides, a personal driver for Denton &amp; Collin County and all of DFW. Airport runs, casino trips, everyday rides, events and recurring pickups. Open 24/7. Call or text (945) 544-0098.">
 <meta name="theme-color" content="#FBF7EF">
+<link rel="canonical" href="https://bigmikerides.com/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Big Mike Rides">
+<meta property="og:title" content="Big Mike Rides | Personal Driver &amp; Car Service in Denton &amp; Collin County, TX">
+<meta property="og:description" content="A personal driver for Denton &amp; Collin County and all of DFW. Airport runs, casino trips, everyday rides, events and recurring pickups. Open 24/7.">
+<meta property="og:url" content="https://bigmikerides.com/">
+<meta property="og:image" content="https://bigmikerides.com/og-image.jpg">
+
+<!-- Twitter card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Big Mike Rides | Personal Driver &amp; Car Service in Denton &amp; Collin County, TX">
+<meta name="twitter:description" content="A personal driver for Denton &amp; Collin County and all of DFW. Airport runs, casino trips, everyday rides, events and recurring pickups. Open 24/7.">
+<meta name="twitter:image" content="https://bigmikerides.com/og-image.jpg">
+
+<!-- LocalBusiness structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Big Mike Rides",
+  "description": "A personal driver for Denton & Collin County and all of DFW. Airport runs, casino trips, everyday rides, events and recurring pickups.",
+  "url": "https://bigmikerides.com/",
+  "telephone": "+19455440098",
+  "email": "mike@bigmikerides.com",
+  "priceRange": "$$",
+  "areaServed": [
+    {"@type": "AdministrativeArea", "name": "Denton County, TX"},
+    {"@type": "AdministrativeArea", "name": "Collin County, TX"},
+    {"@type": "City", "name": "Dallas-Fort Worth, TX"}
+  ],
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "00:00",
+    "closes": "23:59"
+  }
+}
+</script>
+
+<!-- FAQPage structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What areas does Big Mike Rides serve?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Denton County and Collin County, plus the greater Dallas-Fort Worth area. If you're not sure your address is in range, just call or text (945) 544-0098 and ask."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Mike available 24/7?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Mike answers his own phone any hour, day or night. Late-night airport landings and early-morning pickups are normal for him."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Big Mike Rides go to DFW Airport?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, airport runs are one of the most common rides Mike does. Just give him your flight number when you book and he'll track it for delays."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is this different from Uber or Lyft?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Big Mike Rides isn't an app dispatching a random driver. It's Mike, personally, in his own clean Jeep Cherokee, every time. Same driver, same reliable vehicle, no surge pricing surprises."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I book a ride?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Call, text, or book online. Give Mike your pickup, drop-off, and time, and it goes straight on his calendar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I set up a recurring ride?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Mike handles scheduled and recurring pickups for regular commutes, appointments, and routines, not just one-off trips."
+      }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <style>
@@ -376,6 +474,38 @@
   .how-step p{color:var(--ink-soft); font-size:0.98rem;}
 
   /* ---------- Testimonial ---------- */
+  .faq{padding:96px 0; background:var(--paper);}
+  .faq-list{max-width:760px; display:flex; flex-direction:column; gap:14px;}
+  .faq-item{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px 24px;
+  }
+  .faq-item summary{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.08rem;
+    color:var(--ink);
+    cursor:pointer;
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{
+    content:"+";
+    flex:0 0 auto;
+    font-family:'Karla', sans-serif;
+    font-size:1.4rem;
+    line-height:1;
+    color:var(--blue);
+    transition:transform 0.2s ease;
+  }
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item p{margin-top:12px; color:var(--ink-soft); max-width:62ch;}
   .quote-block{padding:80px 0; background:var(--mist);}
   .quote-inner{max-width:760px; position:relative; padding-left:64px;}
   .quote-mark{position:absolute; left:0; top:-8px; width:46px; height:46px; color:var(--gold-deep);}
@@ -443,7 +573,7 @@
     .how-step .step-num{grid-row:1 / span 2; margin-bottom:0;}
     .contact-grid{grid-template-columns:1fr; gap:40px;}
     .contact-plate{transform:none;}
-    .meet, .services, .why, .how, .contact{padding:72px 0;}
+    .meet, .services, .why, .how, .faq, .contact{padding:72px 0;}
   }
   @media (max-width: 720px){
     nav{
@@ -779,6 +909,7 @@ m272 -70 c209 -102 265 -426 126 -728 -110 -239 -323 -339 -516 -241 -219 110
       <a href="#meet">Meet Mike</a>
       <a href="#services">Rides</a>
       <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
       <a href="tel:+19455440098" class="nav-btn">Call or text</a>
       <a href="https://calendly.com/orr200654/30min" id="bookNowLink" class="nav-btn gold" target="_blank" rel="noopener">Book a ride</a>
@@ -1139,7 +1270,7 @@ m272 -70 c209 -102 265 -426 126 -728 -110 -239 -323 -339 -516 -241 -219 110
       <div class="section-head">
         <p class="eyebrow">The rides</p>
         <h2 id="servicesTitle">Wherever you're headed, Mike's headed that way.</h2>
-        <p>Five kinds of rides cover just about everything folks call about. Yours not on the list? Call anyway. We'll figure it out.</p>
+        <p>Five kinds of rides cover just about everything folks call about. Yours not on the list? Call anyway. We'll figure it out. Serving Denton County, Collin County, and the greater DFW area.</p>
       </div>
       <div class="service-grid">
 
@@ -2727,6 +2858,42 @@ m272 -70 c209 -102 265 -426 126 -728 -110 -239 -323 -339 -516 -241 -219 110
         <svg class="quote-mark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 30c-4-6 0-16 8-18M18 30c-4-6 0-16 8-18"/><path d="M8 30h8v8H8zM24 30h8v8h-8z"/></svg>
         <blockquote>Mike picked me up at DFW at 11pm when my flight got delayed twice. Never once wondered if my ride would show.</blockquote>
         <p class="quote-attr">A regular rider, Prosper, TX</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="faq reveal" id="faq" aria-labelledby="faqTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Good to know</p>
+        <h2 id="faqTitle">Questions folks ask before they call.</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>What areas does Big Mike Rides serve?</summary>
+          <p>Denton County and Collin County, plus the greater Dallas-Fort Worth area. If you're not sure your address is in range, just call or text (945) 544-0098 and ask.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is Mike available 24/7?</summary>
+          <p>Yes. Mike answers his own phone any hour, day or night. Late-night airport landings and early-morning pickups are normal for him.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Does Big Mike Rides go to DFW Airport?</summary>
+          <p>Yes, airport runs are one of the most common rides Mike does. Just give him your flight number when you book and he'll track it for delays.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How is this different from Uber or Lyft?</summary>
+          <p>Big Mike Rides isn't an app dispatching a random driver. It's Mike, personally, in his own clean Jeep Cherokee, every time. Same driver, same reliable vehicle, no surge pricing surprises.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I book a ride?</summary>
+          <p>Call, text, or book online. Give Mike your pickup, drop-off, and time, and it goes straight on his calendar.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I set up a recurring ride?</summary>
+          <p>Yes. Mike handles scheduled and recurring pickups for regular commutes, appointments, and routines, not just one-off trips.</p>
+        </details>
       </div>
     </div>
   </section>
